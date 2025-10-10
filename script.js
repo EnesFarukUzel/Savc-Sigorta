@@ -193,24 +193,31 @@ contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     // Get form data
-    const formData = new FormData();
-    formData.append('name', document.getElementById('name').value);
-    formData.append('email', document.getElementById('email').value);
-    formData.append('phone', document.getElementById('phone').value);
-    formData.append('service', document.getElementById('service').value);
-    formData.append('message', document.getElementById('message').value);
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const service = document.getElementById('service').value;
+    const message = document.getElementById('message').value;
     
-    // Add photo if selected
-    if (photoInput.files[0]) {
-        formData.append('photo', photoInput.files[0]);
-    }
+    // Create WhatsApp message
+    const whatsappMessage = `🛡️ *SAVCI SİGORTA - YENİ MESAJ* 🛡️
 
-    // Here you would typically send the data to a server
-    // For now, we'll just show a success message
-    console.log('Form Data:', Object.fromEntries(formData));
+👤 *Ad Soyad:* ${name}
+📧 *E-posta:* ${email}
+📞 *Telefon:* ${phone}
+🛠️ *Hizmet:* ${service}
+💬 *Mesaj:* ${message}
 
+📅 *Tarih:* ${new Date().toLocaleString('tr-TR')}`;
+
+    // WhatsApp URL
+    const whatsappUrl = `https://wa.me/905302622216?text=${encodeURIComponent(whatsappMessage)}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
     // Show success message
-    showNotification('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.', 'success');
+    showNotification('WhatsApp açılıyor... Mesajınızı gönderin!', 'success');
 
     // Reset form
     contactForm.reset();
