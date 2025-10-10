@@ -463,6 +463,19 @@ body {
     overflow: hidden;
 }
 
+.about-logo {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    transition: var(--transition);
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+.about-logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+}
+
 .image-placeholder::before {
     content: '';
     position: absolute;
@@ -1052,6 +1065,11 @@ body {
     .logo-text {
         font-size: 1.1rem;
     }
+    
+    .about-logo {
+        width: 150px;
+        height: 150px;
+    }
 
     .hero-title {
         font-size: 2rem;
@@ -1086,6 +1104,11 @@ body {
     
     .logo {
         gap: 10px;
+    }
+    
+    .about-logo {
+        width: 120px;
+        height: 120px;
     }
 
     .hero-title {
