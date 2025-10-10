@@ -210,14 +210,43 @@ contactForm.addEventListener('submit', (e) => {
 
 📅 *Tarih:* ${new Date().toLocaleString('tr-TR')}`;
 
-    // WhatsApp URL
-    const whatsappUrl = `https://wa.me/905302622216?text=${encodeURIComponent(whatsappMessage)}`;
+    // Detect device type
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
-    // Open WhatsApp
-    window.open(whatsappUrl, '_blank');
-    
-    // Show success message
-    showNotification('WhatsApp açılıyor... Mesajınızı gönderin!', 'success');
+    if (isMobile) {
+        // Mobile - Open WhatsApp app
+        const whatsappUrl = `https://wa.me/905302622216?text=${encodeURIComponent(whatsappMessage)}`;
+        window.open(whatsappUrl, '_blank');
+        showNotification('WhatsApp açılıyor... Mesajınızı gönderin!', 'success');
+    } else {
+        // Desktop - Show options
+        const choice = confirm(`📱 WhatsApp'ta mesaj göndermek için:\n\n1️⃣ WhatsApp Web: https://web.whatsapp.com\n2️⃣ WhatsApp Desktop uygulaması\n3️⃣ Telefonunuzdan WhatsApp\n\n"Tamam" düğmesine basın ve WhatsApp Web'i açın.`);
+        
+        if (choice) {
+            // Open WhatsApp Web
+            window.open('https://web.whatsapp.com', '_blank');
+            
+            // Show message to copy
+            const messageToCopy = `🛡️ SAVCI SİGORTA - YENİ MESAJ 🛡️
+
+👤 Ad Soyad: ${name}
+📧 E-posta: ${email}
+📞 Telefon: ${phone}
+🛠️ Hizmet: ${service}
+💬 Mesaj: ${message}
+
+📅 Tarih: ${new Date().toLocaleString('tr-TR')}
+
+📞 Bu mesajı 0530 262 22 16 numarasına gönderin.`;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(messageToCopy).then(() => {
+                showNotification('Mesaj panoya kopyalandı! WhatsApp Web\'de 0530 262 22 16 numarasına yapıştırın.', 'success');
+            }).catch(() => {
+                showNotification('WhatsApp Web açıldı. Mesajı manuel olarak kopyalayın.', 'success');
+            });
+        }
+    }
 
     // Reset form
     contactForm.reset();
